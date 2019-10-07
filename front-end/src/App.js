@@ -43,11 +43,7 @@ class App extends React.Component {
   render() {
     return(
       <>
-      <form>
-          Scored bigger than: 
-            <input score="score" onChange={this.handleScoreChange}/>
-          <button> Submit </button>
-      </form>
+      <h1>Scores</h1>
       <ul>
         {
           this.props.foods.map(food => <Food key={food.id} food={food}/>)
