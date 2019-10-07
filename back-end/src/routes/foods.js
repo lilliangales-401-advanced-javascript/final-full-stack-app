@@ -6,9 +6,9 @@ const foodsRouter = express.Router();
 const uuidv4 = require('uuid/v4')
 
 let foods = [
-  {_id: uuidv4(), name: 'pizza', score: '5'},
-  {_id: uuidv4(), name: 'sushi', score: '8'},
-  {_id: uuidv4(), name: 'curry', score: '10'},
+  {name: 'pizza', score: '5', _id: uuidv4()},
+  {name: 'sushi', score: '8', _id: uuidv4()},
+  {name: 'curry', score: '10', _id: uuidv4()},
 ]
 
 
