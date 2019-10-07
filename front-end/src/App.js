@@ -34,11 +34,13 @@ class App extends React.Component {
   }
 
   findTopScore(results) {
-    let topScore = results[0].score;
-    console.log(topScore)
-    let topScores = results.filter(food => food.score >= topScore);
-    this.setState({topScores: topScores});
-    console.log(topScores);
+    if (results.length){
+      let topScore = results[0].score;
+      console.log(topScore)
+      let topScores = results.filter(food => food.score >= topScore);
+      this.setState({topScores: topScores});
+      console.log(topScores);
+    }
   }
 
   handlePost = (event) => {
