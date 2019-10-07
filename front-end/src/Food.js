@@ -4,6 +4,7 @@ import superagent from 'superagent';
 
 const API_URL = 'http://localhost:4000';
 
+
 class Food extends React.Component {
   
   handleDelete = (event) => {
@@ -16,12 +17,17 @@ class Food extends React.Component {
     .catch(console.log);
   };
 
+ 
   render() {
+    console.log(this.props.id)
     return (
+      <>
+        
       <li key={this.props.food.id}>
-        {this.props.food.name} - {this.props.food.score}
+      {this.props.id ? '(Top Score!)' : ''} {this.props.food.name} - {this.props.food.score}
         <button onClick={this.handleDelete}> Delete </button>
       </li>
+      </>
     )
   }
 }

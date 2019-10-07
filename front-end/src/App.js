@@ -6,18 +6,23 @@ import './App.css';
 
 const API_URL = 'http://localhost:4000';
 
+
+
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
     this.state.nameToPost = '';
     this.state.scoreToPost = '';
+    this.state.topScores = [];
   }
 
   componentDidMount() {
     superagent.get(`${API_URL}/foods`)
-    .then(results => 
-      this.props.loadStore(results.body))
+    .then(results => {
+      this.props.loadStore(results.body);
+      this.findTopScore(results.body)
+    });
   }
 
   handleNameChange = (event) => {
@@ -28,6 +33,14 @@ class App extends React.Component {
     this.setState({scoreToPost: event.target.value})
   }
 
+  findTopScore(results) {
+    let topScore = results[0].score;
+    console.log(topScore)
+    let topScores = results.filter(food => food.score >= topScore);
+    this.setState({topScores: topScores});
+    console.log(topScores);
+  }
+
   handlePost = (event) => {
     event.preventDefault();
     superagent.post(`${API_URL}/foods`)
@@ -36,6 +49,7 @@ class App extends React.Component {
     .then(results => {
       console.log(results);
       this.props.loadStore(results.body);
+      this.findTopScore(results.body);
     })
       .catch(console.log);
   };
@@ -44,9 +58,11 @@ class App extends React.Component {
     return(
       <>
       <h1>Scores</h1>
-      <ul>
-        {
-          this.props.foods.map(food => <Food key={food.id} food={food}/>)
+      <ul> {
+          this.props.foods.map(food => 
+            // this.state.topScores.includes(food) ? 'High Score!' : ''
+          <Food id={this.state.topScores.includes(food)} key={food.id} food={food}/>
+          )
         }
       </ul>
 
@@ -57,12 +73,11 @@ class App extends React.Component {
             <input score="score" onChange={this.handleScoreChange}/>
           <button> Add Score </button>
       </form>
-
-
       </>
     );
   }
 }
+
 
 const mapStateToProps = (state) => ({
   foods: state.foods,
